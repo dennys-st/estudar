@@ -375,11 +375,19 @@ function updateCardUI() {
         if(flashIndex < currentData.length) {
             const data = currentData[flashIndex];
             
-            // Randomly decide if we show the TRUE answer or the FAKE answer
+            // Randomly decide if we show the TRUE answer or a FALSE one
             currentCardIsTrue = Math.random() > 0.5;
             
             qEl.textContent = data.question;
-            aEl.textContent = currentCardIsTrue ? data.answer : data.fakeAnswer;
+            
+            if (currentCardIsTrue) {
+                aEl.textContent = data.answer;
+            } else {
+                // Pick a random answer from another card to be the "fake" one
+                const otherCards = currentData.filter((_, idx) => idx !== flashIndex);
+                const randomOtherCard = otherCards[Math.floor(Math.random() * otherCards.length)];
+                aEl.textContent = randomOtherCard.answer;
+            }
             
             const cardImage = document.getElementById('card-image');
             if(data.image) {
