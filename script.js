@@ -762,41 +762,48 @@ function loadEnemQuestion() {
     optionsContainer.innerHTML = '';
     document.getElementById('enem-continue-area').style.display = 'none';
 
+    // Randomize options order
+    const optionsWithIndices = data.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
+    const shuffledOptions = shuffleArray([...optionsWithIndices]);
+    
+    // Find the new index of the correct answer
+    const newCorrectIndex = shuffledOptions.findIndex(opt => opt.originalIndex === data.correct);
+    window.currentEnemCorrectIndex = newCorrectIndex;
+
     const letters = ['A', 'B', 'C', 'D', 'E'];
     
-    data.options.forEach((opt, idx) => {
+    shuffledOptions.forEach((opt, idx) => {
         const btn = document.createElement('button');
         btn.className = 'enem-option';
-        btn.innerHTML = `<span class="letter">${letters[idx]})</span> <span class="text">${opt}</span>`;
+        btn.innerHTML = `<span class="letter">${letters[idx]})</span> <span class="text">${opt.text}</span>`;
         btn.onclick = () => checkEnemAnswer(idx, btn);
         optionsContainer.appendChild(btn);
     });
 }
 
 function checkEnemAnswer(selectedIndex, btnElement) {
-    const activeData = window.currentEnemSet;
-    const data = activeData[enemIndex];
     const optionsContainer = document.getElementById('enem-options');
     const buttons = optionsContainer.querySelectorAll('.enem-option');
+    const correctIdx = window.currentEnemCorrectIndex;
     
     // Disable all buttons
     buttons.forEach(btn => btn.disabled = true);
     
-    if(selectedIndex === data.correct) {
+    if(selectedIndex === correctIdx) {
         enemCorrect++;
         playFeedback('success');
         btnElement.classList.add('correct');
         setTimeout(() => {
             enemIndex++;
             loadEnemQuestion();
-        }, 1200); // Short delay to show success before moving on
+        }, 1200);
     } else {
         enemWrong++;
         playFeedback('error');
         btnElement.classList.add('wrong');
         
         // Highlight the correct one
-        buttons[data.correct].classList.add('correct');
+        buttons[correctIdx].classList.add('correct');
         
         // Show continue button
         const continueArea = document.getElementById('enem-continue-area');
