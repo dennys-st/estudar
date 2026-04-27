@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Regências & Revolta dos Malês</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+</head>
+<body>
+    <div id="screen-flash" class="screen-flash"></div>
+    
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-titles">
+                <div class="header-top-row">
+                    <span class="badge">A História do Brasil 🇧🇷</span>
+                </div>
+                <h1>Regências & Revolta dos Malês 👑</h1>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- SEÇÃO DE ESTUDO (RESUMO) -->
+            <section id="conteudo" class="tab-content active">
+                <div id="estudo-parte1">
+                    <div class="part-badge-display">Etapa 1: Conhecimento Base 📘</div>
+                    <div id="render-estudo-p1"></div> <!-- Onde os cards serão injetados -->
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="action-btn next-level-btn" id="btn-ver-parte2-estudo">Fixar com Outras Palavras 🧠</button>
+                        <p style="margin-top:0.8rem; opacity:0.6; font-size:0.85rem;">Leia a Parte 1 e clique acima para fixar!</p>
+                    </div>
+                </div> <!-- Fim estudo-parte1 -->
+
+                <div id="estudo-parte2" style="display: none;">
+                    <div class="part-badge-display highlight">Etapa 2: Fixação Profunda 🧠</div>
+                    <div id="render-estudo-p2"></div> <!-- Onde os cards serão injetados -->
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="action-btn secondary-btn" id="btn-voltar-parte1-estudo">Voltar para Parte 1 📖</button>
+                        <p style="margin-top:1rem; opacity:0.7; font-size:0.9rem;">Tudo fixado! Agora você é expert no assunto. 🚀</p>
+                    </div>
+                </div> <!-- Fim estudo-parte2 -->
+
+                <div style="height: 80px;"></div>
+            </section>
+
+            <!-- SEÇÃO FLASHCARDS -->
+            <section id="flashcards-game" class="tab-content" style="display: none;">
+                <div class="flashcard-wrapper game-view">
+                    <div class="level-indicator">
+                        <span id="flash-level-text" class="level-badge">Nível 1</span>
+                    </div>
+                    <div class="progress-bar-top">
+                        <div class="progress-fill" id="progress"></div>
+                    </div>
+                    <div class="flashcard-container">
+                        <div class="flashcard" id="card">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">
+                                    <span class="card-number" id="card-counter">1/10</span>
+                                    <img src="" id="card-image" alt="Ilustração do tema" style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%; border: 3px solid rgba(255,255,255,0.2); margin-top: 1rem; display: none;">
+                                    <div class="question-content" style="margin-top: 1rem;">
+                                        <h3 id="card-question">Pergunta</h3>
+                                    </div>
+                                    <p class="flip-hint pulse">Toque para avaliar a resposta 👀</p>
+                                </div>
+                                <div class="flashcard-back">
+                                    <div class="answer-content">
+                                        <h3 style="color: #93c5fd; margin-bottom: 0.5rem;" id="card-answer-title">Isso é Verdade ou Falso? 🤔</h3>
+                                        <p id="card-answer">Resposta</p>
+                                    </div>
+                                    <div class="evaluation-buttons" id="eval-btns">
+                                        <button class="eval-btn error" id="btn-wrong"><span class="icon">❌</span> Errado</button>
+                                        <button class="eval-btn success" id="btn-correct"><span class="icon">✅</span> Certo</button>
+                                    </div>
+                                    <div class="continue-area" id="continue-area" style="display: none; margin-top: 1.5rem; text-align: center;">
+                                        <button class="action-btn primary-btn" id="btn-continue" style="opacity: 0.5; pointer-events: none; margin-bottom: 0;">Aguarde... ⏱️</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swipe-hints">
+                            <span>Deslize para a esquerda (Errado) ou Direita (Certo) ↔️</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO LIGAR OS PONTOS -->
+            <section id="match-game" class="tab-content" style="display: none;">
+                <div class="game-view">
+                    <div class="level-indicator mt-2">
+                        <span id="match-level-text" class="level-badge">Nível 1</span>
+                    </div>
+                    <div class="progress-bar-top mt-2">
+                        <div class="progress-fill" id="match-progress"></div>
+                    </div>
+                    <div class="match-header">
+                        <h3>Ligue os Pontos 🔗</h3>
+                        <p>Toque no conceito e depois na sua respectiva resposta para conectá-los!</p>
+                    </div>
+                    <div class="match-board" id="match-board">
+                        <div class="match-col" id="match-col-q"></div>
+                        <div class="match-col" id="match-col-a"></div>
+                    </div>
+                    <button id="btn-next-match" class="action-btn primary-btn mt-4" style="display:none;">Próxima Rodada 🚀</button>
+                </div>
+            </section>
+
+            <!-- SEÇÃO ENEM -->
+            <section id="enem-game" class="tab-content" style="display: none;">
+                <div class="game-view">
+                    <div class="level-indicator mt-2">
+                        <span class="level-badge">Simulado ENEM 🎓</span>
+                    </div>
+                    <div class="progress-bar-top mt-2">
+                        <div class="progress-fill" id="enem-progress"></div>
+                    </div>
+                    <div class="enem-container">
+                        <div class="flashcard" style="cursor: default;">
+                            <div class="flashcard-inner" style="transform: none;">
+                                <div class="flashcard-front" style="position: relative; height: auto; min-height: 350px;">
+                                    <span class="card-number" id="enem-counter">1/6</span>
+                                    <div class="question-content" style="text-align: left; margin-top: 1.5rem;">
+                                        <h3 id="enem-question" style="font-size: 1.1rem; line-height: 1.5; margin-bottom: 1.5rem; font-weight: 500;">Pergunta ENEM</h3>
+                                    </div>
+                                    <div class="enem-options" id="enem-options"></div>
+                                    <div class="continue-area" id="enem-continue-area" style="display: none; margin-top: 1.5rem; text-align: center;">
+                                        <button class="action-btn primary-btn pulse" id="btn-enem-continue">Próxima Questão ➡️</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TELA DE TRANSIÇÃO PARTE 1 → PARTE 2 -->
+            <section id="part-transition" class="tab-content" style="display: none;">
+                <div class="results-container">
+                    <h2>Parte 1 Concluída! 🔥</h2>
+                    <div class="score-circle" style="background: conic-gradient(var(--success) 100%, var(--surface) 0%);">
+                        <span style="font-size:2.5rem;">✅</span>
+                    </div>
+                    <p class="score-message">Agora vamos ver os mesmos assuntos com outras palavras. Isso fixa o conteúdo de verdade!</p>
+                    <div class="info-box success mt-2" style="margin-bottom:1.5rem;">
+                        <strong>💡 Por que a Parte 2?</strong> Repetir com palavras diferentes é a técnica mais eficaz para memorização de longo prazo.
+                    </div>
+                    <button class="action-btn next-level-btn" id="btn-start-part2">Iniciar Parte 2 🚀</button>
+                </div>
+            </section>
+
+            <!-- TELA DE RESULTADOS -->
+            <section id="results" class="tab-content" style="display: none;">
+                <div class="results-container">
+                    <h2 id="result-title">Nível Concluído! 🎉</h2>
+                    <div class="score-circle">
+                        <span id="score-text">0/10</span>
+                    </div>
+                    <p class="score-message" id="score-message">Excelente desempenho!</p>
+                    <div class="stats-row" id="stats-row">
+                        <div class="stat-box success-box">
+                            <span class="stat-val" id="stat-correct">0</span>
+                            <span class="stat-label">Acertos ✅</span>
+                        </div>
+                        <div class="stat-box error-box" id="error-box">
+                            <span class="stat-val" id="stat-wrong">0</span>
+                            <span class="stat-label">Erros ❌</span>
+                        </div>
+                    </div>
+                    <div id="next-level-area" class="mt-4" style="display: none;">
+                        <p style="margin-bottom: 1rem; color: #f59e0b; font-weight: 600;">Excelente! Pronto para o Nível 2? As perguntas ficam mais formais e difíceis! 🚀</p>
+                        <button class="action-btn next-level-btn" id="btn-next-level">Ir para o Nível 2 📘</button>
+                    </div>
+                    <div id="restart-area" class="mt-4">
+                        <button class="action-btn primary-btn" id="btn-restart">Tentar Novamente 🔄</button>
+                        <button class="action-btn secondary-btn" id="btn-back-study">Voltar ao Resumo 📖</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-target="conteudo">
+                <span class="nav-icon">📖</span>
+                <span>Resumo</span>
+            </button>
+            <button class="nav-item" data-target="flashcards-game">
+                <span class="nav-icon">🗂️</span>
+                <span>Flashcards</span>
+            </button>
+            <button class="nav-item" data-target="match-game">
+                <span class="nav-icon">🔗</span>
+                <span>Conectar</span>
+            </button>
+            <button class="nav-item" data-target="enem-game">
+                <span class="nav-icon">🎓</span>
+                <span>ENEM</span>
+            </button>
+        </nav>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js');
+            });
+        }
+    </script>
+</body>
+</html>
