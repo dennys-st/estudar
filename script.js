@@ -2,17 +2,27 @@
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').then(reg => {
+      // Check for updates every time the app loads
+      reg.update();
+
       reg.addEventListener('updatefound', () => {
         const newWorker = reg.installing;
         newWorker.addEventListener('statechange', () => {
           if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            console.log('New update available');
+            console.log('New update available - Forcing reload');
+            // SW already has skipWaiting, so this should trigger controllerchange
           }
         });
       });
     }).catch(err => console.log('SW Reg Failed', err));
   });
 
+  // Force update check when coming back online
+  window.addEventListener('online', () => {
+    navigator.serviceWorker.ready.then(reg => reg.update());
+  });
+
+  // Reload the page when a new service worker takes over
   let refreshing = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (!refreshing) {

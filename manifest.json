@@ -1,11 +1,11 @@
 {
-  "name": "História: República",
-  "short_name": "República",
-  "description": "App de estudo para a Proclamação da República",
+  "name": "História: Regências & Malês",
+  "short_name": "História",
+  "description": "App de estudo para As Regências e a Revolta dos Malês",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f172a",
-  "theme_color": "#2563eb",
+  "theme_color": "#0f172a",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/3074/3074058.png",
