@@ -18,14 +18,38 @@
             <div class="header-titles">
                 <div class="header-top-row">
                     <span class="badge">A História do Brasil 🇧🇷</span>
+                    <button id="btn-home" class="home-icon-btn" style="display: none;">🏠</button>
                 </div>
-                <h1>Regências & Revolta dos Malês 👑</h1>
+                <h1 id="app-main-title">Estudo de História 👑</h1>
             </div>
         </header>
 
         <main class="main-content">
+            <!-- TELA DE SELEÇÃO DE ASSUNTO -->
+            <section id="subject-selection" class="tab-content active">
+                <div class="selection-container">
+                    <h2 class="selection-title">O que vamos aprender hoje? 📚</h2>
+                    <div class="subject-grid">
+                        <button class="subject-card" onclick="selectSubject('regencias')">
+                            <div class="subject-icon">👑</div>
+                            <div class="subject-info">
+                                <h3>As Regências</h3>
+                                <p>O Brasil sem Imperador (1831-1840)</p>
+                            </div>
+                        </button>
+                        <button class="subject-card highlight" onclick="selectSubject('males')">
+                            <div class="subject-icon">☪️</div>
+                            <div class="subject-info">
+                                <h3>Revolta dos Malês</h3>
+                                <p>A maior revolta urbana de escravizados</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
             <!-- SEÇÃO DE ESTUDO (RESUMO) -->
-            <section id="conteudo" class="tab-content active">
+            <section id="conteudo" class="tab-content" style="display: none;">
                 <div id="estudo-parte1">
                     <div class="part-badge-display">Etapa 1: Conhecimento Base 📘</div>
                     <div id="render-estudo-p1"></div> <!-- Onde os cards serão injetados -->
@@ -185,7 +209,7 @@
             </section>
         </main>
 
-        <nav class="bottom-nav">
+        <nav class="bottom-nav" style="display: none;">
             <button class="nav-item active" data-target="conteudo">
                 <span class="nav-icon">📖</span>
                 <span>Resumo</span>
